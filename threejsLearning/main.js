@@ -6,57 +6,43 @@ import  * as dat from 'dat.gui'
  const world = {
   plane :{
      width: 10,
-     height:10
+     height:10,
+     widthSegments: 10,
+    heightSegments :10,
 
   }
  }
 
   
-gui.add(world.plane, 'width' , 1 ,  20).onChange(  ()=>{
-  planeMesh.geometry.dispose()
-  planeMesh.geometry= new THREE.PlaneGeometry(world.plane.width,10,10,10 )
-  
-  const {array} = planeMesh.geometry.attributes.position;
-  for(let i=0 ;  i  <array.length ; i+=3 ){
-     const x= array[i]
-     const y= array[i+1]
-     const z= array[i+2] 
-    // console.log(array[i]); 
+gui.add(world.plane, 'width' , 1 ,  20).onChange(generatePlane)
 
-     array[ i+2 ] =  z+ Math.random()  
-      
-            
-  }
+gui.add(world.plane,'height', 1,20 ).onChange(generatePlane)
+ gui.add(world.plane ,'widthSegments' , 1,20 ).onChange(generatePlane)
+ gui.add(world.plane ,'heightSegments' , 1,20 ).onChange(generatePlane)
 
-
-  
-})
-
-gui.add(world.plane,'height', 1,20 ).onChange(
-  ()=>{
-    
+   function generatePlane  (){
     planeMesh.geometry.dispose()
-    planeMesh.geometry= new THREE.PlaneGeometry(world.plane.width,world.plane.height,10,10 )
+    planeMesh.geometry= new THREE.PlaneGeometry(world.plane.width,
+      world.plane.height,
+      world.plane.widthSegments,
+      world.plane.heightSegments 
+      )
     
     const {array} = planeMesh.geometry.attributes.position;
-    console.log(array)
     for(let i=0 ;  i  <array.length ; i+=3 ){
-      const x= array[i]
-      const y= array[i+1]
-      const z= array[i+2] 
+       const x= array[i]
+       const y= array[i+1]
+       const z= array[i+2] 
       // console.log(array[i]); 
-      
-      array[ i+2 ] =  z+ Math.random()  
-      
-      
+  
+       array[ i+2 ] =  z+ Math.random()  
+        
+              
     }
-    
-    
-    
-    
+  
+  
     
   }
-  )
   
   
 //   onChange( () => { ===
